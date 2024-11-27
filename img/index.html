@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторія снів</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a2e;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #0f3460;
+            padding: 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #e94560;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #d13450;
+        }
+        .dream-list {
+            margin-top: 20px;
+        }
+        .dream-item {
+            background-color: #16213e;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .dream-item span {
+            font-weight: bold;
+            color: #e94560;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Лабораторія снів</h1>
+        <p>Запишіть свої сни і відкрийте їх прихований сенс</p>
+    </header>
+    <div class="container">
+        <textarea id="dreamInput" placeholder="Опишіть свій сон тут..."></textarea>
+        <button id="addDreamButton">Додати сон</button>
+        <div class="dream-list" id="dreamList"></div>
+    </div>
+
+    <script>
+        const addDreamButton = document.getElementById('addDreamButton');
+        const dreamInput = document.getElementById('dreamInput');
+        const dreamList = document.getElementById('dreamList');
+
+        // Аналіз снів
+        function analyzeDream(dream) {
+            const keywords = {
+                "вода": "Може символізувати емоції та підсвідомість.",
+                "політ": "Можливість звільнення або мрії.",
+                "темрява": "Страх або невідоме.",
+                "світло": "Надія чи розуміння."
+            };
+            for (const [key, meaning] of Object.entries(keywords)) {
+                if (dream.includes(key)) {
+                    return meaning;
+                }
+            }
+            return "Не вдалося знайти аналіз для цього сну.";
+        }
+
+        // Додати сон до списку
+        addDreamButton.addEventListener('click', () => {
+            const dreamText = dreamInput.value.trim();
+            if (dreamText === "") {
+                alert("Будь ласка, введіть опис сну.");
+                return;
+            }
+
+            const analysis = analyzeDream(dreamText);
+
+            const dreamItem = document.createElement('div');
+            dreamItem.classList.add('dream-item');
+            dreamItem.innerHTML = `
+                <p><span>Сон:</span> ${dreamText}</p>
+                <p><span>Аналіз:</span> ${analysis}</p>
+            `;
+            dreamList.prepend(dreamItem); // Додаємо новий сон на початок списку
+
+            dreamInput.value = ""; // Очищаємо поле вводу
+        });
+    </script>
+</body>
+</html>
